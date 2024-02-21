@@ -1,0 +1,9 @@
+
+export const TESTNET_CARD_PACKAGE_ID =
+  "0x43c21577794c10f7f36d3269d50736c45f9dc4d0c77e3c7d0f219b0a3fd0ae4d";
+
+export const CARD_RECORD: string =
+  "0x7d6444bffd59a7b348613637422a1f335305204e4fea5be1d86d325c3eaf108b";
+
+export const BATTLE_RECORD =
+  "0x2b1b5fc902bf675dc6acf48b61a13a27989383c4f9fba460c03c103c41faf800";

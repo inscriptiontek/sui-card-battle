@@ -1,1 +1,3 @@
-# sui-game
+# sui-card-battle-game
+
+sui-testnetwork
