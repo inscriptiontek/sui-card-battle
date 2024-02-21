@@ -1,4 +1,4 @@
-import ReactTooltip from "react-tooltip";
+
 import styles from "../styles";
 
 const healthPoints = 25;

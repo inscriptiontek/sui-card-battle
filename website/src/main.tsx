@@ -11,12 +11,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./index.css";
 
 // 导入组件
-import App from "./App.tsx";
 import { networkConfig } from "./context/networkConfig.ts";
 import Home from "./pages/Home.tsx";
 import CreateBattle from "./pages/CreateBattle.tsx";
 import Battle from "./pages/Battle.tsx";
-import Test from "./components/Test.tsx";
+// import Test from "./components/Test.tsx";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route path="/" element={<Home />} />
               <Route path="/create-battle" element={<CreateBattle />} />
               <Route path="/battle/:id" element={<Battle />} />
-              <Route path="/test" element={<Test />} />
+              {/* <Route path="/test" element={<Test />} /> */}
             </Routes>
           </BrowserRouter>
         </WalletProvider>

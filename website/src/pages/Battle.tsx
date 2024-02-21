@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "../styles";
 import { useSuiClientQuery } from "@mysten/dapp-kit";
@@ -17,11 +17,6 @@ import {
 import { useSignAndExecuteTransactionBlock } from "@mysten/dapp-kit";
 import { Card, PlayerInfo } from "../components";
 import { getDynamicFields, getObjects } from "../utils";
-import {
-  getFullnodeUrl,
-  SuiClient,
-  SuiHTTPTransport,
-} from "@mysten/sui.js/client";
 
 interface PlayerStatus {
   health: any;
@@ -37,7 +32,7 @@ interface CardsInfo {
 
 let Battle = () => {
   const params = useParams();
-  const [battleId, setBattleId] = useState(params.id);
+  const [battleId] = useState(params.id);
   const [battleData, setBattleData] = useState({});
   const [playerStatusTableId, setPlayerStatusTableId] = useState("");
   const [playersStatuId, setPlayersStatuId] = useState<string[]>([]);
@@ -50,7 +45,7 @@ let Battle = () => {
   const navigate = useNavigate();
   const myAccount = useCurrentAccount();
   // 获取对局信息
-  const { data, isPending, error, refetch } = useSuiClientQuery("getObject", {
+  const { data } = useSuiClientQuery("getObject", {
     id: battleId ? battleId : "",
     options: {
       showContent: true,
@@ -71,12 +66,6 @@ let Battle = () => {
   //     },
   //   }),
   // });
-  let client = new SuiClient({
-    transport: new SuiHTTPTransport({
-      url: getFullnodeUrl("testnet"),
-      WebSocketConstructor: window.WebSocket,
-    }),
-  });
 
   useEffect(() => {
     if (!data?.data) return;
@@ -194,38 +183,10 @@ let Battle = () => {
   useEffect(() => {
     const subMoveChoice = async () => {
       // naming the function unsubscribe may seem counterintuitive here, but you call it later to unsubscribe from the event
-      const unsubscribe = await client.subscribeEvent({
-        filter: {
-          // Package:
-          //   "0xfe0deaecbfe19fd2beeb085e634b0086e78123f9283257fda35c1226c9ab8fa7",
-          // MoveEventType: `${TESTNET_CARD_PACKAGE_ID}::card::MoveChoice`,
-          MoveEventType: `${TESTNET_CARD_PACKAGE_ID}::card::MoveChoice`,
-        },
-        onMessage(event) {
-          console.log("🚀 ~ onMessage ~ event:", event);
-          refetch();
-          // handle subscription notification message here. This function is called once per subscription message.
-        },
-      });
     };
 
     const subEndGame = async () => {
       // naming the function unsubscribe may seem counterintuitive here, but you call it later to unsubscribe from the event
-      const unsubscribe = await client.subscribeEvent({
-        filter: {
-          // Package:
-          //   "0xfe0deaecbfe19fd2beeb085e634b0086e78123f9283257fda35c1226c9ab8fa7",
-          MoveEventType: `${TESTNET_CARD_PACKAGE_ID}::card::BattleEnd`,
-        },
-        onMessage(event) {
-          console.log("🚀 ~ onMessage ~ event:", event);
-          // 弹出结算画面
-
-          // 跳转到首页
-          navigate("/");
-          // handle subscription notification message here. This function is called once per subscription message.
-        },
-      });
     };
     subMoveChoice();
     subEndGame();

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { player01, player02 } from "../assets/index.js";
 import styles from "../styles";
 import { useNavigate } from "react-router-dom";

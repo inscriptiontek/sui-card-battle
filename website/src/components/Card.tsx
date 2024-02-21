@@ -1,4 +1,3 @@
-import React, { ReactElement } from "react";
 
 import styles from "../styles";
 import { allCards } from "../assets/index.js";

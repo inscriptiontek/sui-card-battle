@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { CustomButton, PageHOC } from "../components";
-import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import { useEffect, useState } from "react";
+import { CustomButton } from "../components";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 import { useNavigate } from "react-router-dom";
 import { useSuiClientQuery, useSuiClientQueries } from "@mysten/dapp-kit";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
 import { useSignAndExecuteTransactionBlock } from "@mysten/dapp-kit";
 import { getFullnodeUrl, SuiClient } from "@mysten/sui.js/client";
-import { Space, Table, Tag } from "antd";
+import { Table } from "antd";
 import type { TableProps } from "antd";
 import {
   BATTLE_RECORD,
   TESTNET_CARD_PACKAGE_ID,
-  CARD_RECORD,
 } from "../context/constants.ts";
 import styles from "../styles";
-import { string } from "superstruct";
 
 interface gameDataType {
   battleId: string;
@@ -35,7 +33,6 @@ const JoinBattle = ({ refresh }: JoinBattleProps) => {
   const {
     data: battleData,
     isPending,
-    error,
     refetch,
   } = useSuiClientQuery("getObject", {
     id: BATTLE_RECORD,
@@ -73,17 +70,17 @@ const JoinBattle = ({ refresh }: JoinBattleProps) => {
     queries: isPending
       ? []
       : (battleData as any)?.data.content.fields.battles.map((val: any) => {
-          return {
-            method: "getObject",
-            params: {
-              id: val,
-              options: {
-                showContent: true,
-                showOwner: true,
-              },
+        return {
+          method: "getObject",
+          params: {
+            id: val,
+            options: {
+              showContent: true,
+              showOwner: true,
             },
-          };
-        }),
+          },
+        };
+      }),
 
     combine: (result) => {
       return {

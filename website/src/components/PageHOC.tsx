@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { logo, heroImg } from "../assets/index.js";
 import styles from "../styles/index.js";
 import { JSX } from "react/jsx-runtime";
-import { Box, Container, Flex, Heading } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
 import { ConnectButton } from "@mysten/dapp-kit";
+
 const PageHOC =
   (
     Component: React.ComponentType,

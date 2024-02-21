@@ -1,4 +1,3 @@
-
 export const TESTNET_CARD_PACKAGE_ID =
   "0x43c21577794c10f7f36d3269d50736c45f9dc4d0c77e3c7d0f219b0a3fd0ae4d";
 

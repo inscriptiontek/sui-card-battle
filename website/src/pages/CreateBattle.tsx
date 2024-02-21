@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomButton, CustomInput, PageHOC, GameLoad } from "../components";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
-import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import { useCurrentAccount } from "@mysten/dapp-kit";
 import { useSignAndExecuteTransactionBlock } from "@mysten/dapp-kit";
 import { getFullnodeUrl, SuiClient } from "@mysten/sui.js/client";
 import JoinBattle from "./JoinBattle.tsx";
-import styles from "../styles";
-import { useNavigate } from "react-router-dom";
+
 import {
   BATTLE_RECORD,
   TESTNET_CARD_PACKAGE_ID,
 } from "../context/constants.ts";
 const CreateBattle = () => {
   const [battleName, setbattleName] = useState("");
-  const [waitBattle, setWaitBattle] = useState(false);
+  const [waitBattle] = useState(false);
   const [cards, setCards] = useState<any[]>([]);
   const { mutate: signAndExecute } = useSignAndExecuteTransactionBlock();
   const account = useCurrentAccount();

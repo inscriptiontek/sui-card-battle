@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
-
 import { PageHOC } from "../components";
-import { CustomInput, CustomButton } from "../components";
+import { CustomButton } from "../components";
 import { useNavigate } from "react-router-dom";
-import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-import { useSuiClientQuery, useSuiClientQueries } from "@mysten/dapp-kit";
+import { useCurrentAccount } from "@mysten/dapp-kit";
+import { useSuiClientQuery } from "@mysten/dapp-kit";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
 import styles from "../styles";
 import { getFullnodeUrl, SuiClient } from "@mysten/sui.js/client";
 import { useSignAndExecuteTransactionBlock } from "@mysten/dapp-kit";
 import { CARD_RECORD, TESTNET_CARD_PACKAGE_ID } from "../context/constants";
 const Home = () => {
-  const [playerName, setPlayerName] = useState("");
+  // const [playerName, setPlayerName] = useState("");
   const navigate = useNavigate();
   const { mutate: signAndExecute } = useSignAndExecuteTransactionBlock();
   const client = new SuiClient({ url: getFullnodeUrl("testnet") });
   const [cards, setCards] = useState<any[]>([]);
   const account = useCurrentAccount();
-  const { data, isPending, error, refetch } = useSuiClientQuery("getObject", {
+  const { data, refetch } = useSuiClientQuery("getObject", {
     id: CARD_RECORD,
     options: {
       showContent: true,
