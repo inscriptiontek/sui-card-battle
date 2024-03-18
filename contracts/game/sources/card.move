@@ -12,7 +12,7 @@ module game::card {
     use sui::object::{UID, ID};
     use sui::table;
     use sui::table::{Table};
-    use sui::transfer::{public_transfer, public_share_object};
+    use sui::transfer::{public_transfer, share_object};
     use sui::tx_context;
     use sui::tx_context::{TxContext, sender};
 
@@ -113,8 +113,8 @@ module game::card {
             cards: vector::empty<ID>(),
         };
 
-        public_share_object(battle_record);
-        public_share_object(card_record)
+        share_object(battle_record);
+        share_object(card_record)
     }
 
     public entry fun cancel_battle(battle: &mut Battle, ctx: &mut TxContext) {
@@ -176,7 +176,7 @@ module game::card {
         emit(NewBattle{
             id: object::uid_to_inner(&battle.id),
         });
-        public_share_object(battle)
+        share_object(battle)
     }
 
     public entry fun join_battle(card: Card, battle:&mut Battle, ctx: &mut TxContext) {
@@ -347,29 +347,7 @@ module game::card {
         };
     }
 
-    fun end_battle(battle: &mut Battle,winer:address) {
-        // assert!(!battle.status == BATTLE_STATUS_END, )
-        let p1 = *vector::borrow<address>(&battle.players,0);
-        let p2 = *vector::borrow<address>(&battle.players,1);
-
-        battle.status = BATTLE_STATUS_END;
-        battle.winer = some(winer);
-
-        emit(BattleEnd{
-            battld_id: object::uid_to_inner(&battle.id),
-            winer: some(winer),
-            loser: if (winer == p1) {some(p2)} else {some(p1)},
-        });
-        //
-        // let p1_card = table::remove(&mut battle.cards,p1);
-        // let p2_card = table::remove(&mut battle.cards,p2);
-        //
-        // public_transfer(p1_card, p1);
-        // public_transfer(p2_card, p2)
-    }
-
     fun derive_randomness(v2: &vector<u8>) : (u64, u64) {
-
         let m: u128 = 0;
         let i = 0;
         while (i < 16) {
