@@ -17,10 +17,10 @@ module game::card {
     use sui::tx_context::{TxContext, sender};
 
     // ======== Constants ========
-    const MAX_ATTACK_DEFEND_STRENGTH : u64 = 18;
+    const MAX_ATTACK_DEFEND_STRENGTH : u64 = 10;
 
     const MAX_HEATH : u64 = 25;
-    const MAX_MANA:u64 = 100;
+    const MAX_MANA:u64 = 10;
 
     const BATTLE_STATUS_PENDDING : u64 = 0;
     const BATTLE_STATUS_START : u64 = 1;
